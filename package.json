@@ -1,0 +1,21 @@
+{
+    "name": "dresscode-resources",
+    "version": "0.0.1",
+    "description": "Compiler from binary files to JavaScript-code in DressCodeJS-notation.",
+    "main": "index.js",
+    "directories": {
+        "lib": "lib"
+    },
+    "author": {
+        "name": "Kolyaj",
+        "email": "kolyaj@yandex.ru",
+        "url": "https://github.com/Kolyaj"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "dresscode-bricks": "^0.2.8",
+        "dresscodejs": "^2.0.5",
+        "fs-extra": "^10.0.0",
+        "mime": "^2.5.2"
+    }
+}
