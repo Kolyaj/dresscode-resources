@@ -11,7 +11,8 @@ program
     .option('--resource-directory <dirname>', 'name of resource directories, default resources')
     .option('--cname <Component>', 'name of generated component, default Resources');
 
-var args = program.parse(process.argv);
+program.parse(process.argv);
+var args = program.opts();
 
 compiler.compile(args['directory'] || process.cwd(), args['ctor'], args['resource-directory'], args['cname']).then((components) => {
     components.forEach((cname) => {
