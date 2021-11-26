@@ -14,6 +14,7 @@
     },
     "license": "ISC",
     "dependencies": {
+        "commander": "^8.3.0",
         "dresscode-bricks": "^0.2.8",
         "dresscodejs": "^2.0.5",
         "fs-extra": "^10.0.0",
