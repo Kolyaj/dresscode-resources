@@ -1,6 +1,6 @@
 {
     "name": "dresscode-resources",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Compiler from binary files to JavaScript-code in DressCodeJS-notation.",
     "main": "index.js",
     "bin": "bin/index.js",
