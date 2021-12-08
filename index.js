@@ -72,6 +72,7 @@ async function compileResources(basedir, subdir, cname, ctor) {
         result.sort((item1, item2) => {
             return item1.fname > item2.fname ? 1 : item1.fname < item2.fname ? -1 : 0;
         });
+        resources.sort();
         var textResult = result.map((item) => {
             return item.content;
         }).join('');
