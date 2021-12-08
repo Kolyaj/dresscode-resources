@@ -40,7 +40,7 @@ async function compileResources(basedir, subdir, cname, ctor) {
     } catch (ignores) {
     }
     if (diritems) {
-        var result = '';
+        var result = [];
         var resources = [];
         await Promise.all(diritems.map(async(fname) => {
             if (!fname.startsWith('.')) {
@@ -51,20 +51,31 @@ async function compileResources(basedir, subdir, cname, ctor) {
                 if (stat.isFile()) {
                     var fcontent = await fs.readFile(fullname, 'binary');
                     var mimeType = mime.getType(path.extname(fname));
-                    result += `${cname}['${normalizedLocalName}'] = new ${ctor}('${mimeType}', '${Buffer.from(fcontent, 'binary').toString('base64')}');\n`;
+                    result.push({
+                        fname: fname,
+                        content: `${cname}['${normalizedLocalName}'] = new ${ctor}('${mimeType}', '${Buffer.from(fcontent, 'binary').toString('base64')}');\n`
+                    });
                     resources.push(fname);
                 } else if (stat.isDirectory()) {
                     var [dirresult, dirresources] = await compileResources(basedir, localName, cname, ctor);
-                    result += dirresult;
                     var diritems = dirresources.map((resource) => {
                         resources.push(`${fname}/${resource}`);
                         return `    '${resource}': ${cname}['${normalizedLocalName}/${resource}']`;
                     });
-                    result += `${cname}['${localName}'] = {\n${diritems.join(',\n')}\n};\n`
+                    result.push({
+                        fname: fname,
+                        content: `${dirresult}${cname}['${localName}'] = {\n${diritems.join(',\n')}\n};\n`
+                    })
                 }
             }
         }));
-        return [result, resources];
+        result.sort((item1, item2) => {
+            return item1.fname > item2.fname ? 1 : item1.fname < item2.fname ? -1 : 0;
+        });
+        var textResult = result.map((item) => {
+            return item.content;
+        }).join('');
+        return [textResult, resources];
     }
     return [];
 }
